@@ -7,8 +7,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="billingService" />
         <module name="passengerService" />
+        <module name="registryService" />
+        <module name="billingService" />
         <module name="driverService" />
       </profile>
     </annotationProcessing>
@@ -16,6 +17,7 @@
       <module name="billingService" target="17" />
       <module name="driverService" target="17" />
       <module name="passengerService" target="17" />
+      <module name="registryService" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -23,6 +25,7 @@
       <module name="billingService" options="-parameters" />
       <module name="driverService" options="-parameters" />
       <module name="passengerService" options="-parameters" />
+      <module name="registryService" options="-parameters" />
     </option>
   </component>
 </project>
