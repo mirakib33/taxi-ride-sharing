@@ -8,12 +8,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="passengerService" />
+        <module name="apiGateway" />
         <module name="registryService" />
         <module name="billingService" />
         <module name="driverService" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="apiGateway" target="17" />
       <module name="billingService" target="17" />
       <module name="driverService" target="17" />
       <module name="passengerService" target="17" />
@@ -22,6 +24,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="apiGateway" options="-parameters" />
       <module name="billingService" options="-parameters" />
       <module name="driverService" options="-parameters" />
       <module name="passengerService" options="-parameters" />

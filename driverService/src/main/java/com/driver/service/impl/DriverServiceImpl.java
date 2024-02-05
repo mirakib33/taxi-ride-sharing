@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Slf4j
 @Service
 public class DriverServiceImpl implements DriverService {
@@ -21,9 +23,11 @@ public class DriverServiceImpl implements DriverService {
     @Override
     public ResponseEntity<String> registerDriver(Driver driver) {
         try {
+            String driverId = UUID.randomUUID().toString();
+            driver.setDriverId(driverId);
             driverRepository.saveAndFlush(driver);
             log.info("Driver registered successfully");
-            return DriverUtils.getResponseEntity("Passenger registered successfully", HttpStatus.CREATED);
+            return DriverUtils.getResponseEntity("Driver registered successfully", HttpStatus.CREATED);
         } catch (Exception e) {
             log.error("Error occurred while registering driver", e);
         }

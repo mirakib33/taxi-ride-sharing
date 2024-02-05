@@ -15,9 +15,8 @@ import lombok.Setter;
 public class Passenger {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "passenger_id", nullable = false)
-    private Long id;
+    private String passengerId;
 
     @Column(name = "name", nullable = false)
     private String name;

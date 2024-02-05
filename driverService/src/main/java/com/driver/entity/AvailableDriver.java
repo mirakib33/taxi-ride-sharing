@@ -25,8 +25,8 @@ public class AvailableDriver {
     @Column(name = "active_status")
     private boolean activeStatus;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "driver_id", nullable = false)
-    private Driver driver;
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "driver_id")
+//    private Driver driver;
 
 }

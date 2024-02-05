@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Slf4j
 @Service
 public class PassengerServiceImpl implements PassengerService {
@@ -22,6 +24,8 @@ public class PassengerServiceImpl implements PassengerService {
     public ResponseEntity<String> registerPassenger(Passenger passenger) {
 
         try {
+            String passengerId = UUID.randomUUID().toString();
+            passenger.setPassengerId(passengerId);
             passengerRepository.saveAndFlush(passenger);
             log.info("Passenger registered successfully");
             return PassengerUtils.getResponseEntity("Passenger registered successfully", HttpStatus.CREATED);

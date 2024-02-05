@@ -14,9 +14,8 @@ import lombok.Setter;
 @Table(name = "driver")
 public class Driver {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "driver_id", nullable = false)
-    private Long id;
+    private String driverId;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -36,6 +35,13 @@ public class Driver {
     @Column(name = "city")
     private String city;
 
-    @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private AvailableDriver availableDriver;
+    @Column(name = "status")
+    private boolean status;
+
+    @Column(name = "available_from")
+    private String available_from;
+
+//    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinColumn(name = "available_id", referencedColumnName = "available_id")
+//    private AvailableDriver availableDriver;
 }
