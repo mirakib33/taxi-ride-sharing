@@ -24,8 +24,8 @@ public class Driver {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
+    @Column(name = "phone", unique = true, nullable = false)
+    private String phone;
 
     @Column(name = "vehicle_type", nullable = false)
     private String vehicleType;
@@ -37,5 +37,5 @@ public class Driver {
     private double rating;
 
     @Column(name = "availability_status", nullable = false)
-    private boolean available;
+    private boolean availabilityStatus;
 }
