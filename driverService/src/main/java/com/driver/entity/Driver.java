@@ -38,4 +38,7 @@ public class Driver {
 
     @Column(name = "availability_status", nullable = false)
     private boolean availabilityStatus;
+
+    @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private AvailableDriver availableDriver;
 }
