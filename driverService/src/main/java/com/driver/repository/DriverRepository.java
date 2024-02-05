@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface DriverRepository extends JpaRepository<Driver, Long> {
 
     Driver saveAndFlush(Driver driver);
-    void updateAvailabilityStatusById(Long id, boolean availabilityStatus);
+
 
 }

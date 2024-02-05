@@ -33,11 +33,8 @@ public class Driver {
     @Column(name = "driving_license_number", unique = true, nullable = false)
     private String drivingLicenseNumber;
 
-    @Column(name = "rating")
-    private double rating;
-
-    @Column(name = "availability_status", nullable = false)
-    private boolean availabilityStatus;
+    @Column(name = "city")
+    private String city;
 
     @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private AvailableDriver availableDriver;

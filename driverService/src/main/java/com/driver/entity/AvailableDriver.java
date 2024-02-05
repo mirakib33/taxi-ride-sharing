@@ -22,7 +22,7 @@ public class AvailableDriver {
     @Column(name = "place", nullable = false)
     private String place;
 
-    @Column(name = "active_status", nullable = false)
+    @Column(name = "active_status")
     private boolean activeStatus;
 
     @OneToOne(fetch = FetchType.LAZY)
