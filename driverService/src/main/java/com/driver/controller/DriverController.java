@@ -1,5 +1,6 @@
 package com.driver.controller;
 
+import com.driver.DTO.DriverDTO;
 import com.driver.constants.DriverConstants;
 import com.driver.entity.Driver;
 import com.driver.service.DriverService;
@@ -22,9 +23,9 @@ public class DriverController {
     private DriverService driverService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerDriver(@RequestBody Driver driver) {
+    public ResponseEntity<String> registerDriver(@RequestBody DriverDTO driverDTO) {
         try {
-            ResponseEntity<String> response = driverService.registerDriver(driver);
+            ResponseEntity<String> response = driverService.registerDriver(driverDTO);
             return new ResponseEntity<>(response.getBody(), response.getStatusCode());
         } catch (Exception e) {
             log.error("Error occurred while registering driver", e);

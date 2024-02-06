@@ -22,8 +22,8 @@ public class DriverDTO {
     private String phone;
     private String vehicleType;
     private String drivingLicenseNumber;
-    private double rating;
-    private boolean availabilityStatus;
-    private AvailableDriverDTO availableDriver;
+    private String city;
+    private boolean status;
+    private String availableFrom;
 
 }
