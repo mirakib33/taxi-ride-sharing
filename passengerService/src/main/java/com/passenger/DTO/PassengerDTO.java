@@ -1,10 +1,7 @@
-package com.driver.DTO;
+package com.passenger.DTO;
 
-import com.driver.entity.AvailableDriver;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -17,9 +14,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DriverDTO {
+public class PassengerDTO {
 
-    private String driverId;
+
+    private String passengerId;
 
     @NotBlank(message = "Name cannot be blank")
     private String name;
@@ -32,17 +30,7 @@ public class DriverDTO {
     @Pattern(regexp = "\\d{11}", message = "Phone number should be 11 digits")
     private String phone;
 
-    @NotBlank(message = "Vehicle type cannot be blank")
-    private String vehicleType;
-
-    @NotBlank(message = "Driving license number cannot be blank")
-    private String drivingLicenseNumber;
-
     @NotBlank(message = "City cannot be blank")
     private String city;
-
-    private boolean status;
-
-    private String availableFrom;
 
 }

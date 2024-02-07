@@ -32,7 +32,7 @@ public class Driver {
     @Column(name = "driving_license_number", unique = true, nullable = false)
     private String drivingLicenseNumber;
 
-    @Column(name = "city")
+    @Column(name = "city", nullable = false)
     private String city;
 
     @Column(name = "status")
