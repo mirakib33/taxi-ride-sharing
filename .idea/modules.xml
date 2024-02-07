@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/passengerService/passengerService.iml" filepath="$PROJECT_DIR$/passengerService/passengerService.iml" />
       <module fileurl="file://$PROJECT_DIR$/registryService/registryService.iml" filepath="$PROJECT_DIR$/registryService/registryService.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/ride-sharing-service.iml" filepath="$PROJECT_DIR$/.idea/ride-sharing-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rideService/rideService.iml" filepath="$PROJECT_DIR$/rideService/rideService.iml" />
     </modules>
   </component>
 </project>

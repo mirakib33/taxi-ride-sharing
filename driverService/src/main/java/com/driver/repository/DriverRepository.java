@@ -12,6 +12,6 @@ public interface DriverRepository extends JpaRepository<Driver, String> {
 
     Driver saveAndFlush(Driver driver);
 
-    @Query("SELECT d FROM Driver d WHERE d.status = true AND d.available_from LIKE %:place%")
-    List<Driver> findByStatusAndAvailableFromContaining(@Param("place") String availableFrom);
+    @Query("SELECT d FROM Driver d WHERE d.status = true AND d.available_from LIKE %:availableFrom%")
+    List<Driver> findByStatusAndAvailableFromContaining(@Param("availableFrom") String availableFrom);
 }

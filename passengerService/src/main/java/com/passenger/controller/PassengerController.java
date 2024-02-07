@@ -10,10 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 @Slf4j
 @RestController
@@ -22,6 +20,9 @@ public class PassengerController {
 
     @Autowired
     private PassengerService passengerService;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @PostMapping("/register")
     public ResponseEntity<String> registerPassenger(@Valid @RequestBody PassengerDTO passengerDTO) {
@@ -32,6 +33,11 @@ public class PassengerController {
             log.error("Error occurred while registering passenger", e);
         }
         return PassengerUtils.getResponseEntity(PassengerConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @GetMapping("/availableDrivers")
+    public ResponseEntity<?> getAvailableDriver(@RequestParam("availableFrom") String availableFrom) {
+
     }
 
 }

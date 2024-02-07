@@ -1,4 +1,4 @@
-package com.billing;
+package com.ride;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
@@ -9,10 +9,10 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @EnableFeignClients
-public class BillingServiceApplication {
+public class RideServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BillingServiceApplication.class, args);
+		SpringApplication.run(RideServiceApplication.class, args);
 	}
 
 	@Bean

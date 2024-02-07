@@ -1,4 +1,4 @@
-package com.passenger.entity;
+package com.ride.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
