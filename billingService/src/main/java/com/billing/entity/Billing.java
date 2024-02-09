@@ -20,25 +20,27 @@ import java.util.Date;
 @Table(name = "billing")
 public class Billing {
 
-
+    @Id
+    @Column(name = "billing_id", nullable = false)
     private String billingId;
 
-    @NotBlank(message = "Ride Id cannot be blank")
+    @Column(name = "ride_id", nullable = false)
     private String rideId;
 
-    @NotBlank(message = "Passenger Id cannot be blank")
+    @Column(name = "passenger_id", nullable = false)
     private String passengerId;
 
-    @NotBlank(message = "Driver Id cannot be blank")
+    @Column(name = "driver_id", nullable = false)
     private String driverId;
 
-    @NotBlank(message = "Payment Method cannot be blank")
+    @Column(name = "payment_method", nullable = false)
     private String paymentMethod;
 
-    @NotBlank(message = "Transaction Id cannot be blank")
+    @Column(name = "transaction_id", nullable = false)
     private String transactionId;
 
-    @NotBlank(message = "Payment Date annot be blank")
+    @Column(name = "payment_date", nullable = false)
     private Date payment_date;
+
 
 }

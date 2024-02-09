@@ -1,6 +1,7 @@
 package com.billing.DTO;
 
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,22 +17,22 @@ public class BillingDTO {
 
     private String billingId;
 
-    @Column(name = "ride_id", nullable = false)
+    @NotBlank(message = "Ride Id cannot be blank")
     private String rideId;
 
-    @Column(name = "passenger_id", nullable = false)
+    @NotBlank(message = "Passenger Id cannot be blank")
     private String passengerId;
 
-    @Column(name = "driver_id", nullable = false)
+    @NotBlank(message = "Driver Id cannot be blank")
     private String driverId;
 
-    @Column(name = "payment_method", nullable = false)
+    @NotBlank(message = "Payment Method cannot be blank")
     private String paymentMethod;
 
-    @Column(name = "transaction_id", nullable = false)
+    @NotBlank(message = "Transaction Id cannot be blank")
     private String transactionId;
 
-    @Column(name = "payment_date", nullable = false)
+    @NotBlank(message = "Payment Date annot be blank")
     private Date payment_date;
 
 }
