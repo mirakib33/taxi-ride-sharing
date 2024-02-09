@@ -13,7 +13,7 @@ public interface DriverService {
 
     public ResponseEntity<?> getDriverById(String driverId);
     public ResponseEntity<String> registerDriver(DriverDTO driverDTO);
-    public ResponseEntity<?> getAvailableDriver(String availableFrom);
+    public ResponseEntity<?> getAvailableDriver(String availableFrom,  String type);
     public ResponseEntity<List<VehicleType>> getAllVehicleTypes();
 
 }

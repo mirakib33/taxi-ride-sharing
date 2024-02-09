@@ -47,9 +47,9 @@ public class DriverController {
     }
 
     @GetMapping("/availableDrivers")
-    public ResponseEntity<?> getAvailableDriver(@RequestParam("availableFrom") String availableFrom) {
+    public ResponseEntity<?> getAvailableDriver(@RequestParam("availableFrom") String availableFrom, @RequestParam("type") String type) {
         try {
-            ResponseEntity<?> response = driverService.getAvailableDriver(availableFrom);
+            ResponseEntity<?> response = driverService.getAvailableDriver(availableFrom, type);
             return new ResponseEntity<>(response.getBody(), response.getStatusCode());
         } catch (Exception e) {
             log.error("Error occurred while getting available drivers from drivers", e);
@@ -62,7 +62,6 @@ public class DriverController {
         try {
             ResponseEntity<List<VehicleType>> response = driverService.getAllVehicleTypes();
             return new ResponseEntity<>(response.getBody(), response.getStatusCode());
-//            return driverService.getAllVehicleTypes();
         } catch (Exception e) {
             log.error("Error occurred while getting all vehicle types", e);
         }

@@ -1,6 +1,5 @@
-package com.ride.DTO;
+package com.passenger.DTO;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

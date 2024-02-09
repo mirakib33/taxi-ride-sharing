@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Entity
 @Getter
 @Setter
@@ -28,18 +30,28 @@ public class Ride {
     private String destination;
 
     @Column(name = "start_time")
-    private String startTime;
+    private Date startTime;
 
     @Column(name = "end_time")
-    private String endTime;
+    private Date endTime;
+
+    @Column(name = "status")
+    private String status;
+
+    @Column(name = "requested_on")
+    private Date requestedOn;
+
+    @Column(name = "accepted_on")
+    private Date acceptedOn;
+
+    @Column(name = "fare")
+    private Double fare;
 
     @Column(name = "passenger_id")
-    private String drivingLicenseNumber;
+    private String passengerId;
 
     @Column(name = "driver_id")
-    private String city;
+    private String driverId;
 
-    @Column(name = "request_status")
-    private String requestStatus;
 
 }

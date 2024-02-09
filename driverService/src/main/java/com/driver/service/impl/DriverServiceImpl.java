@@ -70,10 +70,10 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public ResponseEntity<?> getAvailableDriver(String availableFrom) {
+    public ResponseEntity<?> getAvailableDriver(String availableFrom,  String type) {
         try {
             log.info("Getting available driver");
-            List<Driver> availableDrivers = driverRepository.findByStatusAndAvailableFromContaining(availableFrom);
+            List<Driver> availableDrivers = driverRepository.findByStatusAndAvailableFromContaining(availableFrom, type);
 
             if (availableDrivers == null || availableDrivers.isEmpty()) {
                 return new ResponseEntity<>("No driver available right now for the specified place", HttpStatus.NOT_FOUND);
