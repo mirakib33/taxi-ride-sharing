@@ -4,7 +4,6 @@ import com.ride.DTO.RideDTO;
 import com.ride.constants.RideConstants;
 import com.ride.service.RideService;
 import com.ride.utils.RideUtils;
-import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -55,9 +54,9 @@ public class RideController {
     }
 
     @PutMapping("/update/driver/{rideId}")
-    public ResponseEntity<?> updateRideStatusByDriver(@PathVariable String rideId, @RequestBody RideDTO rideDTO) {
+    public ResponseEntity<?> updateRideStatusByDriver(@PathVariable String rideId, @RequestParam("status") String status) {
         try{
-            ResponseEntity<String> response = rideService.updateRideStatusByDriver(rideId, rideDTO);
+            ResponseEntity<String> response = rideService.updateRideStatusByDriver(rideId, status);
             return new ResponseEntity<>(response.getBody(), response.getStatusCode());
         } catch (Exception e) {
             log.error("Error occurred while updating ride status by driver", e);
@@ -66,9 +65,9 @@ public class RideController {
     }
 
     @PutMapping("/update/passenger/{rideId}")
-    public ResponseEntity<?> updateRideStatusByPassenger(@PathVariable String rideId, @RequestBody RideDTO rideDTO) {
+    public ResponseEntity<?> updateRideStatusByPassenger(@PathVariable String rideId, @RequestParam("status") String status) {
         try{
-            ResponseEntity<String> response = rideService.updateRideStatusByPassenger(rideId, rideDTO);
+            ResponseEntity<String> response = rideService.updateRideStatusByPassenger(rideId, status);
             return new ResponseEntity<>(response.getBody(), response.getStatusCode());
         } catch (Exception e) {
             log.error("Error occurred while updating ride status by passenger", e);

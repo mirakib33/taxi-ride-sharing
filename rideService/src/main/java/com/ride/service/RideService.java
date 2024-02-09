@@ -2,6 +2,7 @@ package com.ride.service;
 
 import com.ride.DTO.RideDTO;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestParam;
 
 public interface RideService {
 
@@ -11,7 +12,7 @@ public interface RideService {
 
     ResponseEntity<?> getRideByDriverId(String driverId);
 
-    ResponseEntity<String> updateRideStatusByDriver(String rideId, RideDTO rideDTO);
+    ResponseEntity<String> updateRideStatusByDriver(String rideId, String status);
 
-    ResponseEntity<String> updateRideStatusByPassenger(String rideId, RideDTO rideDTO);
+    ResponseEntity<String> updateRideStatusByPassenger(String rideId, String status);
 }

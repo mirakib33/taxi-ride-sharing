@@ -139,7 +139,7 @@ public class PassengerServiceImpl implements PassengerService {
         return this.modelMapper.map(passengerDTO, Passenger.class);
     }
 
-    public PassengerDTO PassengerToDto(Passenger passenger) {
+    public PassengerDTO passengerToDto(Passenger passenger) {
         return this.modelMapper.map(passenger, PassengerDTO.class);
     }
 

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,9 @@ public class DriverController {
 
     @Autowired
     private DriverService driverService;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @GetMapping("/{driverId}")
     public ResponseEntity<?> getDriverById(@PathVariable String driverId) {
@@ -66,6 +70,18 @@ public class DriverController {
             log.error("Error occurred while getting all vehicle types", e);
         }
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @PutMapping("/update/driver/{rideId}")
+    public ResponseEntity<?> updateRideStatusByDriver(@PathVariable String rideId, @RequestParam("status") String status) {
+        try{
+            String url = DriverConstants.RIDE_SERVICE_URL + "update/driver/" + rideId + "?status=" + status;
+            ResponseEntity<String>  response = restTemplate.getForEntity(url, String.class);
+            return new ResponseEntity<>(response.getBody(), response.getStatusCode());
+        } catch (Exception e) {
+            log.error("Error occurred while updating ride status by driver", e);
+        }
+        return DriverUtils.getResponseEntity(DriverConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

@@ -81,5 +81,17 @@ public class PassengerController {
         return PassengerUtils.getResponseEntity(PassengerConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @PutMapping("/cancelRide/{rideId}")
+    public ResponseEntity<?> updateRideStatusByPassenger(@PathVariable String rideId, @RequestParam("status") String status) {
+        try{
+            String url = PassengerConstants.RIDE_SERVICE_URL + "update/passenger/" + rideId + "?status=" + status;
+            ResponseEntity<String>  response = restTemplate.getForEntity(url, String.class);
+            return new ResponseEntity<>(response.getBody(), response.getStatusCode());
+        } catch (Exception e) {
+            log.error("Error occurred while updating ride status by driver", e);
+        }
+        return PassengerUtils.getResponseEntity(PassengerConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 
 }

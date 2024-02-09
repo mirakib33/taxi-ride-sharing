@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
 import java.util.Optional;
@@ -82,7 +83,7 @@ public class RideServiceImpl implements RideService {
     }
 
     @Override
-    public ResponseEntity<String> updateRideStatusByDriver(String rideId, RideDTO rideDTO) {
+    public ResponseEntity<String> updateRideStatusByDriver(String rideId, String status) {
         try{
             Ride ride = rideRepository.findById(rideId)
                     .orElseThrow(() -> new ResourceNotFoundException("Ride not found with id: " + rideId));
@@ -90,24 +91,24 @@ public class RideServiceImpl implements RideService {
             Date currentDateTime = new Date();
             String message = "";
 
-            if(rideDTO.getStatus() != null & "Accepted".equals(rideDTO.getStatus())) {
-                ride.setStatus(rideDTO.getStatus());
+            if(status != null & "Accepted".equals(status)) {
+                ride.setStatus(status);
                 ride.setAcceptedOn(currentDateTime);
                 rideRepository.save(ride);
                 message = "Ride accepted successfully";
-            } else if("Start".equals(ride.getStatus())) {
-                ride.setStatus(rideDTO.getStatus());
+            } else if(status != null & "Start".equals(status)) {
+                ride.setStatus(status);
                 ride.setStartTime(currentDateTime);
                 rideRepository.save(ride);
                 message = "Ride started";
-            } else if("End".equals(ride.getStatus())) {
-                ride.setStatus(rideDTO.getStatus());
+            } else if(status != null & "End".equals(status)) {
+                ride.setStatus(status);
                 ride.setEndTime(currentDateTime);
                 rideRepository.save(ride);
                 message = "Ride ended";
             } else {
                 ride.setStatus("Cancelled");
-                ride.setStatus(rideDTO.getStatus());
+                ride.setStatus(status);
                 rideRepository.save(ride);
                 message = "Ride cancelled successfully";
             }
@@ -120,13 +121,13 @@ public class RideServiceImpl implements RideService {
     }
 
     @Override
-    public ResponseEntity<String> updateRideStatusByPassenger(String rideId, RideDTO rideDTO) {
+    public ResponseEntity<String> updateRideStatusByPassenger(String rideId, String status) {
         try{
             Ride ride = rideRepository.findById(rideId)
                     .orElseThrow(() -> new ResourceNotFoundException("Ride not found with id: " + rideId));
 
-            if(rideDTO.getStatus() != null) {
-                ride.setStatus(rideDTO.getStatus());
+            if(status != null) {
+                ride.setStatus(status);
             }
             rideRepository.saveAndFlush(ride);
             log.info("Ride status updated successfully by passenger");
