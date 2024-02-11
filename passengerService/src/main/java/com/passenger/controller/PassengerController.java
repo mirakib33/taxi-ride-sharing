@@ -37,6 +37,17 @@ public class PassengerController {
         return PassengerUtils.getResponseEntity(PassengerConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @GetMapping("/{passengerId}")
+    public ResponseEntity<?> getPassengerById(@PathVariable String passengerId) {
+        try {
+            ResponseEntity<?> response = passengerService.getPassengerById(passengerId);
+            return new ResponseEntity<>(response.getBody(), response.getStatusCode());
+        } catch (Exception e) {
+            log.error("Error occurred while getting passenger by passenger id", e);
+        }
+        return PassengerUtils.getResponseEntity(PassengerConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @GetMapping("/availableDrivers")
     public ResponseEntity<?> getAvailableDrivers(@RequestParam("availableFrom") String availableFrom, @RequestParam("type") String type) {
         try {

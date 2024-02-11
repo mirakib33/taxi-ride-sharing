@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -54,6 +55,24 @@ public class PassengerServiceImpl implements PassengerService {
             log.error("Error occurred while registering passenger", e);
         }
         return PassengerUtils.getResponseEntity(PassengerConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<?> getPassengerById(String passengerId) {
+        try {
+            log.info("Getting passenger by passenger id");
+            Optional<Passenger> passenger = passengerRepository.findById(passengerId);
+
+            if (passenger.isPresent()) {
+                PassengerDTO passengerDTO = passengerToDto(passenger.get());
+                return new ResponseEntity<>(passengerDTO, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Passenger does not exist with this id", HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            log.error("Error occurred while getting passenger by passenger id", e);
+            return PassengerUtils.getResponseEntity(PassengerConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Override
