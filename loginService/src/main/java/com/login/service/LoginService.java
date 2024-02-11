@@ -1,7 +1,6 @@
 package com.login.service;
 
-import com.login.DTO.PassengerDTO;
-import com.login.entity.Login;
+import com.login.DTO.Login;
 import org.springframework.http.ResponseEntity;
 
 public interface LoginService {

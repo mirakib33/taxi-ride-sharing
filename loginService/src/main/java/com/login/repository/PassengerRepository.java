@@ -1,11 +1,10 @@
 package com.login.repository;
 
-import com.login.DTO.PassengerDTO;
-import com.login.entity.Login;
+import com.login.entity.Passenger;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PassengerRepository extends JpaRepository<PassengerDTO, String> {
+public interface PassengerRepository extends JpaRepository<Passenger, String> {
 
-    PassengerDTO findByEmail(String email);
+    Passenger findByEmail(String email);
 
 }

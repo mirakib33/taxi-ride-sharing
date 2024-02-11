@@ -1,7 +1,7 @@
 package com.login.controller;
 
 import com.login.constants.LoginConstants;
-import com.login.entity.Login;
+import com.login.DTO.Login;
 import com.login.service.LoginService;
 import com.login.utils.LoginUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<?> getPassengerById(@RequestBody Login login) {
         try {
             ResponseEntity<?> response = loginService.login(login);

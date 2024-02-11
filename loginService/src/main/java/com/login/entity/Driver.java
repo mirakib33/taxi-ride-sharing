@@ -1,25 +1,29 @@
-package com.login.DTO;
+package com.login.entity;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PassengerDTO {
+public class Driver {
 
-
-    private String passengerId;
+    @Id
+    private String driverId;
     private String name;
     private String email;
     private String phone;
+    private String vehicleType;
+    private String drivingLicenseNumber;
     private String city;
+    private boolean status;
+    private String availableFrom;
     private String userType;
 
 }

@@ -1,9 +1,9 @@
 package com.login.service.impl;
 
-import com.login.DTO.DriverDTO;
-import com.login.DTO.PassengerDTO;
+import com.login.entity.Driver;
+import com.login.entity.Passenger;
 import com.login.constants.LoginConstants;
-import com.login.entity.Login;
+import com.login.DTO.Login;
 import com.login.repository.DriverRepository;
 import com.login.repository.PassengerRepository;
 import com.login.service.LoginService;
@@ -28,7 +28,7 @@ public class LoginServiceImpl implements LoginService {
     public ResponseEntity<?> login(Login login) {
         try {
             if("Passenger".equalsIgnoreCase(login.getUserType())) {
-                PassengerDTO user = passengerRepository.findByEmail(login.getEmail());
+                Passenger user = passengerRepository.findByEmail(login.getEmail());
                 if(user == null) {
                     return new ResponseEntity<>("User not found with this email", HttpStatus.NOT_FOUND);
                 } else {
@@ -36,7 +36,7 @@ public class LoginServiceImpl implements LoginService {
                     return new ResponseEntity<>(user, HttpStatus.OK);
                 }
             } else if ("Driver".equalsIgnoreCase(login.getUserType())) {
-                DriverDTO user = driverRepository.findByEmail(login.getEmail());
+                Driver user = driverRepository.findByEmail(login.getEmail());
                 if(user == null) {
                     return new ResponseEntity<>("User not found with this email", HttpStatus.NOT_FOUND);
                 } else {
