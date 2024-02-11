@@ -36,7 +36,7 @@ public class BillingServiceImpl implements BillingService {
             Billing billing = dtoToBilling(billingDTO);
 
             String billingId = UUID.randomUUID().toString();
-            billing.setPassengerId(billingId);
+            billing.setBillingId(billingId);
 
             billingRepository.saveAndFlush(billing);
             log.info("Bill paid successfully");

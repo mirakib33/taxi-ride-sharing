@@ -41,7 +41,4 @@ public class Driver {
     @Column(name = "available_from")
     private String availableFrom;
 
-//    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JoinColumn(name = "available_id", referencedColumnName = "available_id")
-//    private AvailableDriver availableDriver;
 }

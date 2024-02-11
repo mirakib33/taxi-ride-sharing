@@ -72,10 +72,13 @@ public class DriverController {
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PutMapping("/update/driver/{rideId}")
-    public ResponseEntity<?> updateRideStatusByDriver(@PathVariable String rideId, @RequestParam("status") String status) {
+    @PutMapping("/update/ride/{rideId}")
+    public ResponseEntity<?> updateRideStatusByDriver(@PathVariable String rideId, @RequestParam("status") String status, @RequestParam("driverId") String driverId) {
         try{
             String url = DriverConstants.RIDE_SERVICE_URL + "update/driver/" + rideId + "?status=" + status;
+            if("End".equalsIgnoreCase(status)) {
+                driverService.updateDriverStatusById(driverId);
+            }
             ResponseEntity<String>  response = restTemplate.getForEntity(url, String.class);
             return new ResponseEntity<>(response.getBody(), response.getStatusCode());
         } catch (Exception e) {

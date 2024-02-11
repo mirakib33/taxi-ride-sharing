@@ -1,8 +1,9 @@
 package com.passenger.controller;
 
 import com.passenger.DTO.PassengerDTO;
-import com.passenger.DTO.RideDTO;
+import com.passenger.clients.DriverClient;
 import com.passenger.constants.PassengerConstants;
+import com.passenger.DTO.VehicleTypeDTO;
 import com.passenger.service.PassengerService;
 import com.passenger.utils.PassengerUtils;
 import jakarta.validation.Valid;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -25,6 +27,13 @@ public class PassengerController {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    private final DriverClient driverClient;
+
+    @Autowired
+    public PassengerController(DriverClient driverClient) {
+        this.driverClient = driverClient;
+    }
 
     @PostMapping("/register")
     public ResponseEntity<String> registerPassenger(@Valid @RequestBody PassengerDTO passengerDTO) {
@@ -48,16 +57,21 @@ public class PassengerController {
         return PassengerUtils.getResponseEntity(PassengerConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @GetMapping(path = "/vehicleTypes")
-    public ResponseEntity<?> getAllVehicleTypes() {
-        try {
-            ResponseEntity<?> response = restTemplate.getForEntity(PassengerConstants.DRIVER_SERVICE_URL + "vehicleTypes", Object.class);
-            return new ResponseEntity<>(response.getBody(), response.getStatusCode());
-        } catch (Exception e) {
-            log.error("Error occurred while getting all vehicle types", e);
-        }
-        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+//    @GetMapping(path = "/vehicleTypes")
+//    public ResponseEntity<List<VehicleType>> getAllVehicleTypes() {
+//        try {
+//            ResponseEntity<List<VehicleType>> response = restTemplate.exchange(
+//                    PassengerConstants.DRIVER_SERVICE_URL + "vehicleTypes",
+//                    HttpMethod.GET,
+//                    null, // No request body
+//                    new ParameterizedTypeReference<List<VehicleType>>() {}
+//            );
+//            return new ResponseEntity<>(response.getBody(), response.getStatusCode());
+//        } catch (Exception e) {
+//            log.error("Error occurred while getting all vehicle types", e);
+//        }
+//        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
 
     @GetMapping("/fare")
     public ResponseEntity<?> getFareByDistanceAndType(@RequestParam("destination") String destination) {
@@ -91,6 +105,17 @@ public class PassengerController {
             log.error("Error occurred while updating ride status by driver", e);
         }
         return PassengerUtils.getResponseEntity(PassengerConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @GetMapping(path = "/vehicleTypes")
+    public ResponseEntity<List<VehicleTypeDTO>> getAllVehicleTypes() {
+        try {
+            ResponseEntity<List<VehicleTypeDTO>> response = driverClient.getAllVehicleTypes();
+            return new ResponseEntity<>(response.getBody(), response.getStatusCode());
+        } catch (Exception e) {
+            log.error("Error occurred while getting all vehicle types", e);
+        }
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 

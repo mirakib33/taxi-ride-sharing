@@ -16,4 +16,5 @@ public interface DriverService {
     public ResponseEntity<?> getAvailableDriver(String availableFrom,  String type);
     public ResponseEntity<List<VehicleType>> getAllVehicleTypes();
 
+    public ResponseEntity<String> updateDriverStatusById(String driverId);
 }

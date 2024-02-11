@@ -2,6 +2,7 @@ package com.passenger.service.impl;
 
 import com.passenger.DTO.PassengerDTO;
 import com.passenger.DTO.RideDTO;
+import com.passenger.clients.DriverClient;
 import com.passenger.constants.PassengerConstants;
 import com.passenger.DTO.DriverDTO;
 import com.passenger.entity.Passenger;
@@ -30,6 +31,13 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    private final DriverClient driverClient;
+
+    @Autowired
+    public PassengerServiceImpl(DriverClient driverClient) {
+        this.driverClient = driverClient;
+    }
 
 
     private String startFrom = "";
@@ -61,14 +69,8 @@ public class PassengerServiceImpl implements PassengerService {
         try {
             startFrom = availableFrom;
             vehicleType = type;
-            String url = PassengerConstants.DRIVER_SERVICE_URL + "availableDrivers?availableFrom=" + availableFrom + "&type=" + type;
-            ResponseEntity<DriverDTO[]> response = restTemplate.getForEntity(url, DriverDTO[].class);
-
-            if (response.getStatusCode().is2xxSuccessful()) {
-                DriverDTO[] availableDrivers = response.getBody();
-                return new ResponseEntity<>(availableDrivers, HttpStatus.OK);
-            }
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            ResponseEntity<?> response = driverClient.getAvailableDriver(availableFrom, type);
+            return new ResponseEntity<>(response.getBody(), HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error occurred while getting available drivers", e);
         }
@@ -176,7 +178,7 @@ public class PassengerServiceImpl implements PassengerService {
 //            Double distance = route.distance(); // Get distance in meters
 //
 //            return distance;
-            return null;
+            return 1200.00;
     }
 
 

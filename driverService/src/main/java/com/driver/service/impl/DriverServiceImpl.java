@@ -8,6 +8,7 @@ import com.driver.repository.DriverRepository;
 import com.driver.repository.VehicleTypeRepository;
 import com.driver.service.DriverService;
 import com.driver.utils.DriverUtils;
+import com.driver.utils.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +74,7 @@ public class DriverServiceImpl implements DriverService {
     public ResponseEntity<?> getAvailableDriver(String availableFrom,  String type) {
         try {
             log.info("Getting available driver");
-            List<Driver> availableDrivers = driverRepository.findByStatusAndAvailableFromContaining(availableFrom, type);
+            List<Driver> availableDrivers = driverRepository.findByStatusAndAvailableFromContainingAndVehicleType(true, availableFrom, type);
 
             if (availableDrivers == null || availableDrivers.isEmpty()) {
                 return new ResponseEntity<>("No driver available right now for the specified place", HttpStatus.NOT_FOUND);
@@ -101,6 +102,23 @@ public class DriverServiceImpl implements DriverService {
         }
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @Override
+    public ResponseEntity<String> updateDriverStatusById(String driverId) {
+        try{
+            Driver driver = driverRepository.findById(driverId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Ride not found with id: " + driverId));
+
+            driver.setStatus(false);
+            driverRepository.saveAndFlush(driver);
+            log.info("Ride status updated successfully by passenger");
+            return DriverUtils.getResponseEntity("Ride cancelled successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Error occurred while updating ride status by passenger", e);
+        }
+        return DriverUtils.getResponseEntity(DriverConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 
     public Driver dtoToDriver(DriverDTO driverDTO) {
         return this.modelMapper.map(driverDTO, Driver.class);
