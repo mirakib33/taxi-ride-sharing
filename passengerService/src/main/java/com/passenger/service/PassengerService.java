@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface PassengerService {
     public ResponseEntity<String> registerPassenger(PassengerDTO passengerDTO);
 
+    public ResponseEntity<?> getPassengerById(String passengerId);
+
     public ResponseEntity<?> getAvailableDrivers(String availableFrom, String type);
 
     public ResponseEntity<?> getFareByDistanceAndType(String destination);
 
     public ResponseEntity<String> rideRequest(String passengerId, String driverId);
+
 }
