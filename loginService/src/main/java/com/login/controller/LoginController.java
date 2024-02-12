@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping(path = "/api")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class LoginController {
 
     @Autowired
