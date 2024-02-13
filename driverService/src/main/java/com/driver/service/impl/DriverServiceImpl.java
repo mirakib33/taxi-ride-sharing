@@ -76,9 +76,9 @@ public class DriverServiceImpl implements DriverService {
             log.info("Getting available driver");
             List<Driver> availableDrivers = driverRepository.findByStatusAndAvailableFromContainingAndVehicleType(true, availableFrom, type);
 
-            if (availableDrivers == null || availableDrivers.isEmpty()) {
-                return new ResponseEntity<>("No driver available right now for the specified place", HttpStatus.NOT_FOUND);
-            }
+//            if (availableDrivers == null || availableDrivers.isEmpty()) {
+//                return new ResponseEntity<>("No driver available right now for the specified place", HttpStatus.NOT_FOUND);
+//            }
 
             List<DriverDTO> availableDriverDTOs = availableDrivers.stream()
                     .map(driver -> driverToDto(driver))
