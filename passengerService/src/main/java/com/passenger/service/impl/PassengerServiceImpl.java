@@ -197,7 +197,10 @@ public class PassengerServiceImpl implements PassengerService {
 //            Double distance = route.distance(); // Get distance in meters
 //
 //            return distance;
-            return 1200.00;
+
+            Random random = new Random();
+            Double distance = Math.round(random.nextDouble() * 100000.0) / 100000.0;
+            return distance;
     }
 
 
