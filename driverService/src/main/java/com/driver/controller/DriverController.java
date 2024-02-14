@@ -20,6 +20,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping(path = "/api/driver")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class DriverController {
 
     @Autowired
