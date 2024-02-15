@@ -4,8 +4,10 @@ import com.ride.entity.Ride;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -13,27 +15,14 @@ public interface RideRepository extends JpaRepository<Ride, String> {
 
     Ride saveAndFlush(Ride ride);
 
-    Optional<Ride> findByPassengerId(String passengerId);
+    @Query("SELECT r FROM Ride r WHERE r.driverId = :driverId AND (r.status = :status1 OR r.status = :status2)")
+    Optional<Ride> findByPassengerIdAndStatus(@Param("driverId") String driverId, @Param("status1") String status1, @Param("status2") String status2);
 
-    Optional<Ride> findByDriverId(String driverId);
+    @Query("SELECT r FROM Ride r WHERE r.driverId = :driverId AND r.status NOT IN (:status1, :status2, :status3)")
+    List<Ride> findByDriverId(@Param("driverId") String driverId, @Param("status1") String status1, @Param("status2") String status2, @Param("status3") String status3);
 
-//    @Modifying
-//    @Query("UPDATE ride r SET r.status = :status WHERE r.ride_id = :rideId")
-//    Optional<Ride> updateRideStatusByPassenger(String status, String rideId);
+    @Query("SELECT r FROM Ride r WHERE r.driverId = :driverId AND (r.status = :status1 OR r.status = :status2)")
+    List<Ride> findByDriverIdAndStatus(@Param("driverId") String driverId, @Param("status1") String status1, @Param("status2") String status2);
 
-//    @Modifying
-//    @Query("UPDATE ride r SET r.status = :status, r.accepted_on = :acceptedOn WHERE r.ride_id = :rideId")
-//    void updateAcceptedStatusByDriver(String status, Date acceptedOn, String rideId);
-//
-//    @Modifying
-//    @Query("UPDATE ride r SET r.status = :status, r.start_time = :endTime WHERE r.ride_id = :rideId")
-//    void updateStartStatusByDriver(String status, Date startTime, String rideId);
-//
-//    @Modifying
-//    @Query("UPDATE ride r SET r.status = :status, r.end_time = :endTime WHERE r.ride_id = :rideId")
-//    void updateEndStatusByDriver(String status, Date endTime,String rideId);
-//
-//    @Modifying
-//    @Query("UPDATE ride r SET r.status = :status WHERE r.ride_id = :rideId")
-//    void updateCancelStatusByDriver(String status, String rideId);
+
 }

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -54,12 +55,9 @@ public class RideServiceImpl implements RideService {
     public ResponseEntity<?> getRideByPassengerId(String passengerId) {
         try {
             log.info("Getting ride by passenger id");
-            Optional<Ride> ride = rideRepository.findByPassengerId(passengerId);
-            if(!ride.isPresent()) {
-                return new ResponseEntity<>("Ride does not exists with this id", HttpStatus.NOT_FOUND);
-            }
-            RideDTO rideDTO = rideToDto(ride.get());
-            return new ResponseEntity<>(rideDTO, HttpStatus.OK);
+            Optional<Ride> ride = rideRepository.findByPassengerIdAndStatus(passengerId, "Running", "End");
+//            RideDTO rideDTO = rideToDto(ride.get());
+            return new ResponseEntity<>(ride, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error occurred while getting ride by passenger id", e);
         }
@@ -70,12 +68,14 @@ public class RideServiceImpl implements RideService {
     public ResponseEntity<?> getRideByDriverId(String driverId) {
         try {
             log.info("Getting ride by driver id");
-            Optional<Ride> ride = rideRepository.findByDriverId(driverId);
-            if(!ride.isPresent()) {
-                return new ResponseEntity<>("Ride does not exists with this id", HttpStatus.NOT_FOUND);
+
+            List<Ride> ride = rideRepository.findByDriverIdAndStatus(driverId, "Accepted", "Running");
+
+            if(ride.size() == 0) {
+                List<Ride> rides = rideRepository.findByDriverId(driverId, "Cancelled", "End", "Paid");
+                return new ResponseEntity<>(rides, HttpStatus.OK);
             }
-            RideDTO rideDTO = rideToDto(ride.get());
-            return new ResponseEntity<>(rideDTO, HttpStatus.OK);
+            return new ResponseEntity<>(ride, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error occurred while getting ride by driver id", e);
         }
@@ -96,7 +96,7 @@ public class RideServiceImpl implements RideService {
                 ride.setAcceptedOn(currentDateTime);
                 rideRepository.save(ride);
                 message = "Ride accepted successfully";
-            } else if(status != null & "Start".equals(status)) {
+            } else if(status != null & "Running".equals(status)) {
                 ride.setStatus(status);
                 ride.setStartTime(currentDateTime);
                 rideRepository.save(ride);

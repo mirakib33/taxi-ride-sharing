@@ -12,6 +12,7 @@ import com.driver.utils.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -86,7 +87,7 @@ public class DriverServiceImpl implements DriverService {
 
             return new ResponseEntity<>(availableDriverDTOs, HttpStatus.OK);
         } catch (Exception e) {
-            log.error("Error occurred while registering driver", e);
+            log.error("Error occurred while getting available drivers", e);
         }
         return DriverUtils.getResponseEntity(DriverConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }

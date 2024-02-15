@@ -3,6 +3,7 @@ package com.passenger.service.impl;
 import com.passenger.DTO.PassengerDTO;
 import com.passenger.DTO.RideDTO;
 import com.passenger.clients.DriverClient;
+import com.passenger.clients.RideClient;
 import com.passenger.constants.PassengerConstants;
 import com.passenger.DTO.DriverDTO;
 import com.passenger.entity.Passenger;
@@ -36,9 +37,14 @@ public class PassengerServiceImpl implements PassengerService {
 
     private final DriverClient driverClient;
 
+    private final RideClient rideClient;
+
     @Autowired
-    public PassengerServiceImpl(DriverClient driverClient) {
+    public PassengerServiceImpl(DriverClient driverClient, RideClient rideClient) {
+
         this.driverClient = driverClient;
+        this.rideClient = rideClient;
+
     }
 
 
@@ -147,7 +153,7 @@ public class PassengerServiceImpl implements PassengerService {
                 throw new IllegalStateException("Passenger ID is required for ride request");
             }
 
-            ResponseEntity<String> response = restTemplate.postForEntity(PassengerConstants.RIDE_SERVICE_URL, rideDTO, String.class);
+            ResponseEntity<String> response = rideClient.rideRequest(rideDTO);
             log.info("Ride requested successfully");
             return PassengerUtils.getResponseEntity(response.getBody(), HttpStatus.CREATED);
         } catch (Exception e) {
@@ -179,8 +185,11 @@ public class PassengerServiceImpl implements PassengerService {
                 actualFare = distanceFare + PassengerConstants.LARGE_TYPE_RATE;
             }
 
+        Random random = new Random();
+        Integer randomFare = random.nextInt(90) + 10;
+
             log.info("Fare calculated successfully");
-            return actualFare;
+            return actualFare + randomFare;
     }
 
     private Double getDistance(String destination) {
@@ -200,7 +209,7 @@ public class PassengerServiceImpl implements PassengerService {
 //            return distance;
 
             Random random = new Random();
-            Double distance = Math.round(random.nextDouble() * 100000.0) / 100000.0;
+            Double distance = Math.round(random.nextDouble() * 100000.0) / 100000.0 + (random.nextInt(900) + 100);
             return distance;
     }
 

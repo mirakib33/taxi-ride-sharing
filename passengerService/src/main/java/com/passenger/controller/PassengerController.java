@@ -1,6 +1,7 @@
 package com.passenger.controller;
 
 import com.passenger.DTO.PassengerDTO;
+import com.passenger.DTO.RideRequestDTO;
 import com.passenger.clients.DriverClient;
 import com.passenger.constants.PassengerConstants;
 import com.passenger.DTO.VehicleTypeDTO;
@@ -19,8 +20,8 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RequestMapping(path = "/api/passenger")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class PassengerController {
 
     @Autowired
@@ -47,7 +48,7 @@ public class PassengerController {
         return PassengerUtils.getResponseEntity(PassengerConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @GetMapping("/{passengerId}")
+    @GetMapping("/details/{passengerId}")
     public ResponseEntity<?> getPassengerById(@PathVariable String passengerId) {
         try {
             ResponseEntity<?> response = passengerService.getPassengerById(passengerId);
@@ -97,9 +98,9 @@ public class PassengerController {
     }
 
     @PostMapping("/rideRequest")
-    public ResponseEntity<String> rideRequest(@RequestParam("passengerId") String passengerId, @RequestParam("driverId") String driverId) {
+    public ResponseEntity<?> rideRequest(@RequestBody RideRequestDTO rideRequestDTO) {
         try {
-            ResponseEntity<String> response = passengerService.rideRequest(passengerId, driverId);
+            ResponseEntity<?> response = passengerService.rideRequest(rideRequestDTO.getPassengerId(), rideRequestDTO.getDriverId());
             return new ResponseEntity<>(response.getBody(), response.getStatusCode());
         } catch (Exception e) {
             log.error("Error occurred while requesting for ride", e);

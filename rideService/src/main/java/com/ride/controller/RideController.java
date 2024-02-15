@@ -15,6 +15,7 @@ import java.util.Date;
 @Slf4j
 @RestController
 @RequestMapping(path = "/api/ride")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class RideController {
 
     @Autowired
@@ -54,9 +55,9 @@ public class RideController {
     }
 
     @PutMapping("/update/driver/{rideId}")
-    public ResponseEntity<?> updateRideStatusByDriver(@PathVariable String rideId, @RequestParam("status") String status) {
+    public ResponseEntity<?> updateRideStatusByDriver(@PathVariable String rideId, @RequestBody RideDTO rideDTO) {
         try{
-            ResponseEntity<String> response = rideService.updateRideStatusByDriver(rideId, status);
+            ResponseEntity<String> response = rideService.updateRideStatusByDriver(rideId, rideDTO.getStatus());
             return new ResponseEntity<>(response.getBody(), response.getStatusCode());
         } catch (Exception e) {
             log.error("Error occurred while updating ride status by driver", e);
