@@ -36,7 +36,7 @@ public class Driver {
     private String city;
 
     @Column(name = "status")
-    private boolean status;
+    private Boolean status;
 
     @Column(name = "available_from")
     private String availableFrom;

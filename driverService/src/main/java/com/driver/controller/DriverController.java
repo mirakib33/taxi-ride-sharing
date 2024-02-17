@@ -1,6 +1,7 @@
 package com.driver.controller;
 
 import com.driver.DTO.DriverDTO;
+import com.driver.DTO.StatusUpdateDTO;
 import com.driver.constants.DriverConstants;
 import com.driver.entity.Driver;
 import com.driver.entity.VehicleType;
@@ -73,14 +74,10 @@ public class DriverController {
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PutMapping("/update/ride/{rideId}")
-    public ResponseEntity<?> updateRideStatusByDriver(@PathVariable String rideId, @RequestParam("status") String status, @RequestParam("driverId") String driverId) {
+    @PutMapping("/update/status/{driverId}")
+    public ResponseEntity<?> updateDriverStatusById(@PathVariable String driverId, @RequestBody StatusUpdateDTO statusUpdateDTO) {
         try{
-            String url = DriverConstants.RIDE_SERVICE_URL + "update/driver/" + rideId + "?status=" + status;
-            if("End".equalsIgnoreCase(status)) {
-                driverService.updateDriverStatusById(driverId);
-            }
-            ResponseEntity<String>  response = restTemplate.getForEntity(url, String.class);
+            ResponseEntity<?> response = driverService.updateDriverStatusById(driverId, statusUpdateDTO.getStatus());
             return new ResponseEntity<>(response.getBody(), response.getStatusCode());
         } catch (Exception e) {
             log.error("Error occurred while updating ride status by driver", e);

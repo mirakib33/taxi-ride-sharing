@@ -41,6 +41,7 @@ public class RideServiceImpl implements RideService {
 
             Date requestedOn = new Date();
             ride.setRequestedOn(requestedOn);
+            ride.setStatus("Requested");
 
             rideRepository.saveAndFlush(ride);
             log.info("Ride requested successfully");
@@ -55,7 +56,7 @@ public class RideServiceImpl implements RideService {
     public ResponseEntity<?> getRideByPassengerId(String passengerId) {
         try {
             log.info("Getting ride by passenger id");
-            Optional<Ride> ride = rideRepository.findByPassengerIdAndStatus(passengerId, "Running", "End");
+            Optional<Ride> ride = rideRepository.findByPassengerIdAndStatus(passengerId, "Running", "Requested", "End");
 //            RideDTO rideDTO = rideToDto(ride.get());
             return new ResponseEntity<>(ride, HttpStatus.OK);
         } catch (Exception e) {

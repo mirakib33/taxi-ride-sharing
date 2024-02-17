@@ -3,9 +3,12 @@ package com.billing.service.impl;
 import com.billing.DTO.BillingDTO;
 import com.billing.constants.BillingConstants;
 import com.billing.entity.Billing;
+import com.billing.entity.Ride;
 import com.billing.repository.BillingRepository;
+import com.billing.repository.RideRepository;
 import com.billing.service.BillingService;
 import com.billing.utils.BillingUtils;
+import com.billing.utils.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,9 @@ public class BillingServiceImpl implements BillingService {
     private BillingRepository billingRepository;
 
     @Autowired
+    private RideRepository rideRepository;
+
+    @Autowired
     private ModelMapper modelMapper;
 
 
@@ -39,6 +45,13 @@ public class BillingServiceImpl implements BillingService {
             billing.setBillingId(billingId);
 
             billingRepository.saveAndFlush(billing);
+
+            Ride ride = rideRepository.findById(billingDTO.getRideId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Ride not found with id: " + billingDTO.getRideId()));
+
+            ride.setStatus("Paid");
+            rideRepository.save(ride);
+
             log.info("Bill paid successfully");
             return BillingUtils.getResponseEntity("Bill paid successfully", HttpStatus.CREATED);
         } catch (Exception e) {

@@ -21,26 +21,29 @@ import java.util.Date;
 public class Billing {
 
     @Id
-    @Column(name = "billing_id", nullable = false)
+    @Column(name = "billing_id")
     private String billingId;
 
-    @Column(name = "ride_id", nullable = false)
+    @Column(name = "ride_id")
     private String rideId;
 
-    @Column(name = "passenger_id", nullable = false)
+    @Column(name = "passenger_id")
     private String passengerId;
 
-    @Column(name = "driver_id", nullable = false)
+    @Column(name = "driver_id")
     private String driverId;
 
-    @Column(name = "payment_method", nullable = false)
+    @Column(name = "payment_method")
     private String paymentMethod;
 
-    @Column(name = "transaction_id", nullable = false)
+    @Column(name = "transaction_id")
     private String transactionId;
 
-    @Column(name = "payment_date", nullable = false)
+    @Column(name = "payment_date")
     private Date payment_date;
+
+    @Column(name = "amount", nullable = false)
+    private Double amount;
 
 
 }

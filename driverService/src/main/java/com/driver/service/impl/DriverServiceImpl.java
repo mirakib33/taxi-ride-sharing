@@ -105,12 +105,12 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public ResponseEntity<String> updateDriverStatusById(String driverId) {
+    public ResponseEntity<String> updateDriverStatusById(String driverId, Boolean status) {
         try{
             Driver driver = driverRepository.findById(driverId)
                     .orElseThrow(() -> new ResourceNotFoundException("Ride not found with id: " + driverId));
 
-            driver.setStatus(false);
+            driver.setStatus(status);
             driverRepository.saveAndFlush(driver);
             log.info("Ride status updated successfully by passenger");
             return DriverUtils.getResponseEntity("Ride cancelled successfully", HttpStatus.OK);
